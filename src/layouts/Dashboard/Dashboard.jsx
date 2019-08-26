@@ -7,7 +7,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // react component that creates notifications (like some alerts with messages)
 import NotificationSystem from "react-notification-system";
-
+import ShortnerModal from '../../components/Modals/ShortUrlModal'
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -198,6 +198,13 @@ handleNotificationClick(type, message) {
   :null
 }
         </div>
+        {
+          this.props.showModal&&
+          <ShortnerModal
+          show={this.props.showModal}
+          hide={()=>this.props.onHideModal()}
+          />
+        }
       </div>
     );
   }
@@ -206,13 +213,15 @@ handleNotificationClick(type, message) {
 const mapSateToProp=state=>{
   return{
 catchError:state.notificationMessage,
-catchErrorType:state.notificationType
+catchErrorType:state.notificationType,
+showModal:state.showModal
   }
 }
 
 const mapDispatchToProp=dispatch=>{
   return{
- onClearCatchError:()=>dispatch({type:'CLEAR_NOTIFICATION'})
+ onClearCatchError:()=>dispatch({type:'CLEAR_NOTIFICATION'}),
+ onHideModal:()=>dispatch({type:'HIDE_MODAL',payload:false})
   }
 }
 export default connect(mapSateToProp,mapDispatchToProp)(Dashboard);

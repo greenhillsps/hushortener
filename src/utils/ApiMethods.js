@@ -40,8 +40,15 @@ export const PostRequest={
  registerUser(data) {
     return axrequest.post(api.register(), data);
   },
+shortenLink(data) {
+    return axrequest.post(api.shortenLink(), data);
+  },
 }
-export const GetRequest = {};
+export const GetRequest = {
+  getAllUrls(params) {
+    return axrequest.get(api.getAllUrls(params),);
+  },
+};
 
 //all put request
 export const PutRequest = {};

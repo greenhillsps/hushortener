@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const getInitials = (name, delimeter = " ") => {
   if (name) {
     var array = name.split(delimeter);
@@ -16,3 +17,7 @@ export const getInitials = (name, delimeter = " ") => {
   }
   return false;
 };
+
+export const DateFormat=(data)=>{
+  return moment(data).format("MM/DD/YYYY")
+}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 import {
   Navbar,
   Nav,
@@ -29,8 +30,29 @@ class HeaderLinks extends Component {
           </NavItem>
 
         </Nav>
+
+        <Nav pullRight>
+          <NavItem eventKey={4} href="#">
+           
+            <div
+              onClick={() => {
+            this.props.onShowModal();
+              }}
+            >
+              <i className={'fa fa-chain'} />
+              <p>{'Create New'}</p>
+            </div>
+          </NavItem>
+             
+              </Nav>
       </div>
     );
   }
 }
-export default withRouter(HeaderLinks);
+
+const mapDispatchToProps=dispatch=>{
+  return{
+    onShowModal:()=>dispatch({type:"SHOW_MODAL",payload:true})
+  }
+}
+export default connect(null,mapDispatchToProps)(withRouter(HeaderLinks))

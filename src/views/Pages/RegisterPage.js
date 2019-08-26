@@ -22,11 +22,17 @@ import "assets/css/style.css";
 import ReactPhoneInput from "react-phone-input-2";
 
 export class RegisterPage extends React.Component {
+ state={
+   errorMessage:''
+ }
   onRegisterUser = (data) => {
   PostRequest.registerUser(data).then(res=>{
-      console.log('response',res.data)
+     localStorage.token = res.data.token;
+   localStorage.user = JSON.stringify(res.data);
+    this.props.history.push('/')
   }).catch(err=>{
-     console.log('error',err.response)
+   err.response.status===401?this.setState({errorMessage:err.response.data.message})
+   :this.setState({errorMessage:err.message})
   })
   };
 
@@ -220,8 +226,17 @@ export class RegisterPage extends React.Component {
                             this.props.registrationError
                           ) : null}
                         </p>
+
+                         {
+                     this.state.errorMessage!==""&&
+                       <small className="text-danger">
+                           {this.state.errorMessage}
+                          </small>
+                       }
                       </div>
+                     
                     }
+                    
                     ftTextCenter
                     legend={
                       <Button
@@ -240,11 +255,10 @@ export class RegisterPage extends React.Component {
                       </Button>
                     }
                   />
+                 
                 </Form>
               </Col>
-              {this.props.userRegisterSuccess ? (
-                <Redirect to="/Dashboard" />
-              ) : null}
+            
             </Row>
           )}
         />
@@ -261,7 +275,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    //setNotification:(errorType,message)=>dispatch({type:'SET_NOTIFICATION',errorType:errorType,errorMessage:message})
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

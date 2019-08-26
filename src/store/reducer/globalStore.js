@@ -4,7 +4,8 @@ export const initialState = {
   
     //set notification
     notificationMessage: false,
-    notificationType: 'error'
+    notificationType: 'error',
+    showModal:false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -27,8 +28,17 @@ const reducer = (state = initialState, action) => {
 
             }
 
-
-
+          
+            case "SHOW_MODAL":
+            return{
+              ...state,
+              showModal:true
+            }
+            case "HIDE_MODAL":
+           return{
+          ...state,
+          showModal:false
+           }
 
         default:
             return state;
