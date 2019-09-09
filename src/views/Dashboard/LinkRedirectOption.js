@@ -4,10 +4,16 @@ import Card from "components/Card/Card.jsx";
 import Button from "components/CustomButton/CustomButton";
 import { PutRequest } from '../../utils/ApiMethods'
 import { connect } from 'react-redux'
+import { onGetUrlDetails } from '../../store/actions'
+import { DateFormat } from '../../utils/helpers'
 class LinkRedirectOption extends React.Component {
     state = {
-        redirectLink: ''
+        redirectLink:'',
+        unblockLoading:false,
+         updateLoading:false
     }
+    
+   
 
     onSubmit = () => {
         const data = {
@@ -19,10 +25,14 @@ class LinkRedirectOption extends React.Component {
             fourOfour: { allow: false },
             urlRedirectto: { change: true, url:this.state.redirectLink }
         }
+        this.setState({updateLoading:true})
         PutRequest.updateFeature(this.props.urlDetails.URL._id,data).then(res=>{
-
+            this.props.onGetUrlDetails(this.props.urlDetails.URL._id)
+            this.props.setNotification("success","Link updated successfully")
+            this.setState({updateLoading:false})
         }).catch(err=>{
-
+            this.props.setNotification("error",err.message)
+            this.setState({updateLoading:false})
         })
     }
     onUnlock=()=>{
@@ -35,21 +45,31 @@ class LinkRedirectOption extends React.Component {
         fourOfour: false,
         urlRedirectto: true
       }
+      this.setState({unblockLoading:true})
       PutRequest.BuyFeature(this.props.urlDetails.URL._id,data).then(res=>{
-
+        this.props.onGetUrlDetails(this.props.urlDetails.URL._id)
+        this.props.setNotification("success","The feature was unblocked successfully")
+        this.setState({unblockLoading:false})
     }).catch(err=>{
-
+        this.props.setNotification("error",err.message)
+        this.setState({unblockLoading:false})
     })
     }
     render() {
         console.log("abcd",this.props.urlDetails)
-        const { redirectLink } = this.state
+        const { redirectLink,unblockLoading,updateLoading } = this.state
         const { URL }=this.props.urlDetails
         var feature={
-            locked:false
+            locked:true,
+            expiryDate:'',
+            url:''
+
         }
+
         if(URL){
-            feature.locked=URL.features.urlRedirectto
+            feature.locked=URL.features.urlRedirectto.locked;
+            feature.expiryDate=URL.features.urlRedirectto.expiryDate;
+            feature.url=URL.features.urlRedirectto.url
         }
         return (
             <Grid className="feature_rapper" fluid>
@@ -58,30 +78,33 @@ class LinkRedirectOption extends React.Component {
                         <Card
                             title={"Link redirect option"}
                             content={
-                                <FormGroup controlId="formBasicEmail">
+                                <div>
+                                <FormGroup className="input-wrapper">
                                     <ControlLabel>Redirect Link</ControlLabel>
-                                    <FormControl type="rext" value={redirectLink} onChange={(e) => this.setState({ redirectLink: e.target.value })} placeholder="Choose redirect link" />
-                                    <Row className="button_rapper" >
-                                        <Button
-                                        fill
-                                        bsStyle="success"
-                                        round
-                                        onClick={this.onSubmit}
-                                        disabled={feature.locked}
-                                    >
-                                       <i className={feature.locked?"fa fa-lock":"fa fa-unlock"} /> Update
-                                      </Button>
-                                      <Button
-                                        fill
-                                        bsStyle="danger"
-                                        round
-                                        onClick={this.onUnlock}
-                                       // disabled={feature.locked}
-                                    >
-                                       Unlock
-                                      </Button>
-                                    </Row>
+                                    <FormControl type="rext" value={redirectLink===''?feature.url:redirectLink} onChange={(e) => this.setState({ redirectLink: e.target.value })} placeholder="Choose redirect link" />
+                                   <label>Expiry Date:</label><span>{DateFormat(feature.expiryDate)}</span>
                                 </FormGroup>
+                                 <Row className="button_rapper" >
+                                 <Button
+                                 fill
+                                 round
+                                 onClick={this.onSubmit}
+                                 disabled={feature.locked||updateLoading}
+                             >
+                                <i className={feature.locked?"fa fa-lock":"fa fa-unlock"} />
+                                {updateLoading?<i className="fa fa-spin fa-spinner"/>:"Update"}
+                               </Button>
+                               <Button
+                                disabled={!feature.locked||unblockLoading}
+                                 fill
+                                 round
+                                 onClick={this.onUnlock}
+                                // disabled={feature.locked}
+                             >
+                               {unblockLoading?<i className="fa fa-spin fa-spinner"/>:"Unlock"}
+                               </Button>
+                             </Row>
+                             </div>
                             }
                         />
                     </Col>
@@ -97,5 +120,11 @@ const mapStateToProps=state=>{
         urlDetails:state.urlDetails
     }
 }
+const mapDispatchToProps=dispatch=>{
+  return{
+    setNotification:(errorType,message)=>dispatch({type:'SET_NOTIFICATION',errorType:errorType,errorMessage:message}),
+    onGetUrlDetails:(id)=>dispatch(onGetUrlDetails(id)),
+  }
+}
 
-export default connect(mapStateToProps)(LinkRedirectOption)
+export default connect(mapStateToProps,mapDispatchToProps)(LinkRedirectOption)

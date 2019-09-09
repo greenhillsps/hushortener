@@ -189,21 +189,47 @@
  .button_rapper{
      text-align: center;
       padding-top: 10px;
+      display: grid;
+    grid-template-columns: 20% 20%;
+    justify-content: center;
+    grid-gap: 23px;
  }
- .button_rapper .btn-success.btn-fill{
-     color:white;
-     background-color: #8ce23c;
-     border-color: #8ce23c;
-     font-weight: bold;
+ .button_rapper .btn-fill{
+     font-weight: bold
+ }
+ .button_rapper button:nth-child(1){
+    grid-column: 1/2;
+    font-weight: bold
  }
  .feature_rapper{
-  margin: 110px 0 110px 0   
+  margin: 110px 0 110px 0;  
  }
 .card .header{
-    background-color: #9afd99;
+    background-color: #f89a31;
     text-align: center;
  }
  .card .header h4{
     color: black;
     font-weight: bold;
  }
+
+ .input-wrapper label{
+     font-weight: bold !important;
+     padding: 10px 10px 0 0px;
+ }
+ .login_board{
+     margin-top: 230px
+ }
+ .main-panel .navbar {
+    background-color: #f89a31;
+}
+.header_links_style{
+    color: black;
+    font-weight:bold
+}
+.header_links_style:hover{
+color: #666666
+}
+.golu-golu{
+
+}

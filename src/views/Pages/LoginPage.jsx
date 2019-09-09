@@ -61,10 +61,10 @@ class LoginPage extends Component {
         <title>{getTabTitle("Login")}</title>
         </Helmet>
       <Grid>
-        <Row>
+        <Row className="login_board">
           
           <Col md={4} sm={6} mdOffset={4} smOffset={3}>
-            <Form >
+            <Form>
               <Card
                 hidden={this.state.cardHidden}
                 textCenter

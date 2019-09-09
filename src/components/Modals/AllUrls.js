@@ -44,8 +44,8 @@ export class AllUrls extends React.Component {
 
 
   onGetDetails=(id)=>{
+    this.props.hide()
   this.props.onGetUrlDetails(id)
-      this.props.hide()
   }
   render() {
       const { show,hide }=this.props

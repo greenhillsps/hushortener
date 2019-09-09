@@ -2,6 +2,7 @@
 
 import Dashboard from '../views/Dashboard/Dashboard';
 import LinkRedirectOption from '../views/Dashboard/LinkRedirectOption';
+import TurnLinkOnOf from '../views/Dashboard/TurnLinkOnOf';
 
 var dashboardRoutes = [
   {
@@ -22,7 +23,7 @@ var dashboardRoutes = [
     path: "/TurnLinksOnOrOff",
     name: "Turn links on/off",
     icon: "fa fa-toggle-on",
-    component: Dashboard
+    component: TurnLinkOnOf
   },
 
   {

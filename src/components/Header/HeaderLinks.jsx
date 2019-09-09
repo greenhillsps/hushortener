@@ -27,7 +27,7 @@ class HeaderLinks extends Component {
 
           <NavItem eventKey={3} onClick={() => { auth.logout(this.props.history) }}>
 
-            <div className="text-danger">
+            <div className="header_links_style">
               <i className="fa fa-sign-out" /> Log out
               </div>
           </NavItem>
@@ -37,13 +37,13 @@ class HeaderLinks extends Component {
         <Nav pullRight>
           <NavItem eventKey={4} href="#">
            
-            <div
+            <div className="header_links_style"
               onClick={() => {
             this.props.onShowModal();
               }}
             >
               <i className={'fa fa-chain'} />
-              <p>{'Create New'}</p>
+              Create New
             </div>
           </NavItem>
              
@@ -52,13 +52,13 @@ class HeaderLinks extends Component {
               <Nav pullRight>
           <NavItem eventKey={4} href="#">
            
-            <div
+            <div className="header_links_style"
               onClick={() => {
             this.setState({showLinkModal:true})
               }}
             >
               <i className={'pe-7s-keypad'} />
-              <p>{'Your Links'}</p>
+              Your Links
             </div>
           </NavItem>
              
