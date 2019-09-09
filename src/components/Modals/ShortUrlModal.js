@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
  import { PostRequest } from '../../utils/ApiMethods'
 import { withFormik, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { onGetAllLinks } from '../../store/actions'
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -53,7 +54,8 @@ export class ShortenUrl extends React.Component {
   onShortenLink=(data)=>{
       this.setState({loading:true})
    PostRequest.shortenLink(data).then(res=>{
-this.setState({loading:false,shortenLink:res.data.url})
+this.setState({loading:false,shortenLink:res.data.url});
+this.props.getAllUrls({page:1,limit:10})
    }).catch(err=>{
 this.setState({loading:false})
    })
@@ -203,5 +205,9 @@ const validationSchema = Yup.object().shape({
 }
 
 
-
-export default ShortenUrl;
+const mapDispatchToProps=dispatch=>{
+  return{
+    getAllUrls:(params)=>dispatch(onGetAllLinks(params))
+  }
+}
+export default connect(null,mapDispatchToProps)(ShortenUrl);

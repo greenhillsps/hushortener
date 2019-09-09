@@ -48,7 +48,21 @@ export const GetRequest = {
   getAllUrls(params) {
     return axrequest.get(api.getAllUrls(params),);
   },
+  getUrlDetails(id) {
+    return axrequest.get(api.getUrlDetails(id),);
+  },
 };
 
-//all put request
-export const PutRequest = {};
+export const PutRequest = {
+  deleteUrls(id) {
+    return axrequest.put(api.deleteUrls(id),);
+  },
+  updateFeature(id,data) {
+    return axrequest.put(api.updateFeature(id),data);
+  },
+  BuyFeature(id,data) {
+    return axrequest.put(api.BuyFeature(id),data);
+  },
+};
+
+

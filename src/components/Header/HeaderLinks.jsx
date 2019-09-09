@@ -14,8 +14,11 @@ import {
   withRouter //what is withRouter? go to https://tylermcginnis.com/react-router-programmatically-navigate/
 } from 'react-router-dom'
 import { auth } from '../../utils/Auth';
-
+import AllLinks from '../../components/Modals/AllUrls'
 class HeaderLinks extends Component {
+  state={
+    showLinkModal:true
+  }
   render() {
     return (
       <div>
@@ -45,14 +48,40 @@ class HeaderLinks extends Component {
           </NavItem>
              
               </Nav>
+
+              <Nav pullRight>
+          <NavItem eventKey={4} href="#">
+           
+            <div
+              onClick={() => {
+            this.setState({showLinkModal:true})
+              }}
+            >
+              <i className={'pe-7s-keypad'} />
+              <p>{'Your Links'}</p>
+            </div>
+          </NavItem>
+             
+              </Nav>
+              {
+                this.state.showLinkModal||!this.props.urlDetails.URL?
+                <AllLinks
+                show={this.state.showLinkModal||!this.props.urlDetails.URL}
+                hide={()=>this.setState({showLinkModal:false})}
+                />
+              :null}
       </div>
     );
   }
 }
-
+const mapStateToProps=state=>{
+  return{
+    urlDetails:state.urlDetails
+  }
+}
 const mapDispatchToProps=dispatch=>{
   return{
     onShowModal:()=>dispatch({type:"SHOW_MODAL",payload:true})
   }
 }
-export default connect(null,mapDispatchToProps)(withRouter(HeaderLinks))
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(HeaderLinks))

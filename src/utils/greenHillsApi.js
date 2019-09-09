@@ -9,10 +9,22 @@ const Api = {
      getAllUrls:(params)=>{
      return `${baseUrl}/url/?page=${params.page}&limit=${params.limit}`
      },
+     deleteUrls:(id)=>{
+        return `${baseUrl}/url/${id}`
+        },
 
       shortenLink:()=>{
      return `${baseUrl}/url/submit`
      },
+     getUrlDetails:(id)=>{
+        return `${baseUrl}/url/${id}`
+        },
+        updateFeature:(id)=>{
+         return `${baseUrl}/feature/buy/${id}`
+         },
+         BuyFeature:(id)=>{
+            return `${baseUrl}/cart/buy/${id}`
+            },
 }
 
 

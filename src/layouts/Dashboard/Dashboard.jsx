@@ -120,6 +120,9 @@ handleNotificationClick(type, message) {
   
     return (
       <div className="wrapper">
+        {this.props.getDetailsLoading&&
+        <div className="loader_rapper" ><div className="loader"></div></div>
+        }
         <NotificationSystem ref="notificationSystem" style={style} />
         {
           this.props.catchError?
@@ -139,6 +142,7 @@ handleNotificationClick(type, message) {
           <Header {...this.props} />
           <Switch>
             {dashboardRoutes.map((prop, key) => {
+              
               if (prop.collapse) {
                 return prop.views.map((propC, key) => {
                   if (propC.name === "Notifications") {
@@ -214,7 +218,8 @@ const mapSateToProp=state=>{
   return{
 catchError:state.notificationMessage,
 catchErrorType:state.notificationType,
-showModal:state.showModal
+showModal:state.showModal,
+getDetailsLoading:state.getDetailsLoading
   }
 }
 
