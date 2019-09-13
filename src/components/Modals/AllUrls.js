@@ -113,7 +113,7 @@ export class AllUrls extends React.Component {
     return (
       <div>
           <Modal
-        dialogClassName="urlList_modal"
+       // dialogClassName="urlList_modal"
         show={show}
         onHide={hide}
       >

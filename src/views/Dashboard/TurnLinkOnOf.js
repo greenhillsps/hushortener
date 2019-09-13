@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { onGetUrlDetails } from '../../store/actions'
 import { DateFormat } from '../../utils/helpers'
 import Switch from 'react-bootstrap-switch';
+import LinkDetailsHeader from '../../components/LinkDetailsHeader'
 
 
 class TurnLinkOnOf extends React.Component {
@@ -77,6 +78,7 @@ class TurnLinkOnOf extends React.Component {
         }
         return (
             <Grid className="feature_rapper" fluid>
+                <LinkDetailsHeader/>
                 <Row>
                     <Col md={6} mdOffset={3}>
                         <Card

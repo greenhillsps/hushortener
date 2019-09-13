@@ -21,3 +21,13 @@ export const getInitials = (name, delimeter = " ") => {
 export const DateFormat=(data)=>{
   return moment(data).format("MM/DD/YYYY")
 }
+
+export const reStructure=(data)=>{
+ 
+ var newData={};
+ if(data.length){
+  newData.label=data[0]._id;
+  newData.value=data[0].percentage
+ }
+  return newData;
+}

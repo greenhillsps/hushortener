@@ -281,3 +281,7 @@ font-weight: bolder;
     grid-column: 1;
     
 }
+
+.chart_col{
+    text-align: center;
+}

@@ -6,14 +6,14 @@ import { PutRequest } from '../../utils/ApiMethods'
 import { connect } from 'react-redux'
 import { onGetUrlDetails } from '../../store/actions'
 import { DateFormat } from '../../utils/helpers'
+import LinkDetailsHeader from '../../components/LinkDetailsHeader'
+
 class LinkRedirectOption extends React.Component {
     state = {
         redirectLink:'',
         unblockLoading:false,
          updateLoading:false
     }
-    
-   
 
     onSubmit = () => {
         const data = {
@@ -73,6 +73,7 @@ class LinkRedirectOption extends React.Component {
         }
         return (
             <Grid className="feature_rapper" fluid>
+                <LinkDetailsHeader/>
                 <Row>
                     <Col md={6} mdOffset={3}>
                         <Card
