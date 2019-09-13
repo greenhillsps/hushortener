@@ -202,7 +202,6 @@
     font-weight: bold
  }
  .feature_rapper{
-  margin: 110px 0 110px 0;  
  }
 .card .header{
     background-color: #f89a31;
@@ -232,4 +231,53 @@ color: #666666
 }
 .golu-golu{
 
+}
+._error{
+color:red;
+font-weight: bolder;
+}
+
+._ip_number{
+        /* border: 1px solid black; */
+        padding: 3px;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 7px;
+        background-color: #f89a31;
+        color: white;
+        margin: 20px 0;
+
+}
+._ip_number span{
+    float: right;
+    position: relative;
+    bottom: 7px;
+}
+
+.modal-header{
+    background-color: rgb(244, 127, 50);
+    color: black;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.modal-header h4{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+._link_details_wrapper{
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 5px;
+    border-bottom: 2px solid #ad8335;
+}
+
+._link_details_wrapper .row{
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+}
+._link_details_wrapper .row label{
+    grid-column: 1;
+    
 }

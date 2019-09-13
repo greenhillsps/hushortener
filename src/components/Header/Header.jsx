@@ -67,9 +67,9 @@ class Header extends Component {
             </button>
           </div>
           <Navbar.Header>
-            <Navbar.Brand>
+            <Navbar.Brand> 
               {/* Here we create navbar brand, based on route name */}
-              <a href="#">{this.makeBrand()}</a>
+              <a href="#" style={{color:'black',fontWeight:"bold"}} >{this.makeBrand()}</a>
             </Navbar.Brand>
             <Navbar.Toggle onClick={this.mobileSidebarToggle} />
           </Navbar.Header>

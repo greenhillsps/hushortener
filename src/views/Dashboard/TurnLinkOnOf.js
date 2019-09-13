@@ -90,6 +90,7 @@ class TurnLinkOnOf extends React.Component {
                                                 value={change===''?feature.enable:toggle}
                                                 onText="Unblock"
                                                 offText="Block"
+                                                className="golu-golu"
                                             />
                                         </Row>
 

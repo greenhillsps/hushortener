@@ -1,14 +1,14 @@
 import React from "react";
-import Card from "components/Card/Card";
 import Button from "components/CustomButton/CustomButton";
-import { Grid, Row, Col,Modal } from "react-bootstrap";
+import { Grid, Row, Col,Modal,Nav,NavItem } from "react-bootstrap";
 import ReactTable from "react-table";
 import { DateFormat } from "../../utils/helpers"
 import { connect } from 'react-redux'
-import { GetRequest,PutRequest } from "../../utils/ApiMethods";
+import { PutRequest } from "../../utils/ApiMethods";
 import { onGetUrlDetails } from '../../store/actions'
 import SweetAlert from "react-bootstrap-sweetalert";
 import { onGetAllLinks } from '../../store/actions'
+import { auth } from '../../utils/Auth'
 const defaultParams={
     page:0,
     limit:10
@@ -119,10 +119,35 @@ export class AllUrls extends React.Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-sm">
-          Your URLs<span>
-            <Button  bsStyle="danger" fill round onClick={this.props.onShowModal} >
+          <span>
+            {/* <Button  bsStyle="danger" fill round onClick={this.props.onShowModal} >
               Create New   
-            </Button>
+            </Button> */}
+            <Nav>
+          <NavItem eventKey={4} href="#">
+           
+            <div className="header_links_style"
+              onClick={() => {
+            this.props.onShowModal();
+              }}
+            >
+              <i className={'fa fa-chain'} />
+              Create New
+            </div>
+          </NavItem>
+             
+              </Nav>
+              <Nav>
+
+          <NavItem eventKey={3} onClick={() => { auth.logout(this.props.history) }}>
+
+            <div className="header_links_style">
+              <i className="fa fa-sign-out" /> Log out
+              </div>
+          </NavItem>
+
+        </Nav>
+
           </span>
           </Modal.Title>
         </Modal.Header>

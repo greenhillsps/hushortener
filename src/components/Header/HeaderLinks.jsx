@@ -68,6 +68,7 @@ class HeaderLinks extends Component {
                 <AllLinks
                 show={this.state.showLinkModal||!this.props.urlDetails.URL}
                 hide={()=>this.setState({showLinkModal:false})}
+                history={this.props.history}
                 />
               :null}
       </div>

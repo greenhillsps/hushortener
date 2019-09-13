@@ -1,7 +1,6 @@
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { PostRequest } from '../../utils/ApiMethods'
-import { Redirect } from "react-router-dom";
 import {
   Grid,
   Row,
@@ -27,9 +26,9 @@ export class RegisterPage extends React.Component {
  }
   onRegisterUser = (data) => {
   PostRequest.registerUser(data).then(res=>{
-     localStorage.token = res.data.token;
-   localStorage.user = JSON.stringify(res.data);
-    this.props.history.push('/')
+    // localStorage.token = res.data.token;
+   //localStorage.user = JSON.stringify(res.data);
+    this.props.history.push('/page/login')
   }).catch(err=>{
    err.response.status===401?this.setState({errorMessage:err.response.data.message})
    :this.setState({errorMessage:err.message})
