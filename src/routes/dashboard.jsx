@@ -4,6 +4,8 @@ import Dashboard from '../views/Dashboard/Dashboard';
 import LinkRedirectOption from '../views/Dashboard/LinkRedirectOption';
 import TurnLinkOnOf from '../views/Dashboard/TurnLinkOnOf';
 import BlockListProtection from '../views/Dashboard/BlockListProtection';
+import CustomShortLink from '../views/Dashboard/CustomShortLink';
+import Settings from '../views/Dashboard/Settings'
 
 var dashboardRoutes = [
   {
@@ -29,7 +31,7 @@ var dashboardRoutes = [
 
   {
     path: "/BlacklistProtection",
-    name: "Blacklist protection",
+    name: "Block list protection",
     icon: "fa fa-lock",
     component: BlockListProtection
   },
@@ -38,7 +40,13 @@ var dashboardRoutes = [
     path: "/CustomShortLink",
     name: "Custom short link",
     icon: "fa fa-linux",
-    component: Dashboard
+    component: CustomShortLink
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    icon: "fa fa-cogs",
+    component: Settings
   },
   
 

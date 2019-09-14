@@ -108,9 +108,9 @@ class BlockListProtection extends React.Component {
             feature.expiryDate = URL.features.blockIps.expiryDate;
         }
         return (
-            <Grid className="feature_rapper" fluid>
+            <Grid fluid>
                 <LinkDetailsHeader/>
-                <Row>
+                <Row className="feature_rapper">
                     <Col md={6} mdOffset={3}>
                         <Card
                             title={"Block List Protection"}

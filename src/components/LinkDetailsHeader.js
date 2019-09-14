@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Grid,Row } from 'react-bootstrap'
-
+import { DateFormat } from '../utils/helpers'
 class LinksDetails extends React.Component {
     render() {
         const { urlDetails }=this.props;
@@ -17,9 +17,9 @@ class LinksDetails extends React.Component {
           url.actualUrl=urlDetails.URL.actualUrl;
           url.shortUrl=urlDetails.URL.shortUrl;
           url.title=urlDetails.URL.title;
-          url.createdAt=urlDetails.URL.createdAt;
+          url.createdAt=DateFormat(urlDetails.URL.createdAt);
           url.description=urlDetails.URL.description;
-          url.TotalClicks=urlDetails.URL.TotalClicks;
+          url.TotalClicks=urlDetails.TotalClicks;
         }
         return (
             <Grid className="_link_details_wrapper" fluid>

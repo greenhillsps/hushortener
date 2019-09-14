@@ -19,6 +19,9 @@ const Api = {
      getUrlDetails:(id)=>{
         return `${baseUrl}/url/${id}`
         },
+        getUser:()=>{
+         return `${baseUrl}/users/user`
+         },
         updateFeature:(id)=>{
          return `${baseUrl}/feature/buy/${id}`
          },

@@ -133,7 +133,9 @@
 }
 
 .urlList_modal{
-    width: 800px !important;
+    width: 1000px !important;
+    margin: 0 auto !important;
+    padding: 40px;
 }
 
 
@@ -202,6 +204,7 @@
     font-weight: bold
  }
  .feature_rapper{
+     /* margin-top: 20px */
  }
 .card .header{
     background-color: #f89a31;
@@ -271,6 +274,8 @@ font-weight: bolder;
     background-color: white;
     border-radius: 5px;
     border-bottom: 2px solid #ad8335;
+    padding: 30px !important ;
+    margin-top: 20px;
 }
 
 ._link_details_wrapper .row{

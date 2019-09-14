@@ -51,6 +51,9 @@ export const GetRequest = {
   getUrlDetails(id) {
     return axrequest.get(api.getUrlDetails(id),);
   },
+  getUser() {
+    return axrequest.get(api.getUser());
+  },
 };
 
 export const PutRequest = {
