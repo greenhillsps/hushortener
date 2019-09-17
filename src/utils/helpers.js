@@ -31,3 +31,8 @@ export const reStructure=(data)=>{
  }
   return newData;
 }
+
+//valid date
+export const DateValidation = (currentDate,matchDate) => {
+  return currentDate.isBefore(moment(matchDate));
+};

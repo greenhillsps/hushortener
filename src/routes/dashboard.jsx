@@ -6,6 +6,7 @@ import TurnLinkOnOf from '../views/Dashboard/TurnLinkOnOf';
 import BlockListProtection from '../views/Dashboard/BlockListProtection';
 import CustomShortLink from '../views/Dashboard/CustomShortLink';
 import Settings from '../views/Dashboard/Settings'
+import CustomExpiryDate from '../views/Dashboard/CustomExpiryDate'
 
 var dashboardRoutes = [
   {
@@ -41,6 +42,12 @@ var dashboardRoutes = [
     name: "Custom short link",
     icon: "fa fa-linux",
     component: CustomShortLink
+  },
+  {
+    path: "/CustomExpiryDate",
+    name: "Custom expiry date",
+    icon: "fa fa-calendar",
+    component: CustomExpiryDate
   },
   {
     path: "/settings",

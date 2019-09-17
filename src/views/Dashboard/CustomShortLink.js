@@ -12,18 +12,19 @@ class CustomShortLink extends React.Component {
     state = {
         CustomLink:'',
         unblockLoading:false,
-         updateLoading:false
+         updateLoading:false,
+         error:''
     }
 
 componentDidMount(){
     if(this.props.urlDetails.URL){
-        this.setState({CustomLink:this.props.urlDetails.URL.features.customShortUrl.shortUrl})
+        this.setState({CustomLink:this.props.urlDetails.URL.queryKey})
     }
 }
 
 componentWillReceiveProps(props){
     if(props.urlDetails.URL){
-        this.setState({CustomLink:props.urlDetails.URL.features.customShortUrl.shortUrl})
+        this.setState({CustomLink:props.urlDetails.URL.queryKey})
     }
 }
 
@@ -37,14 +38,18 @@ componentWillReceiveProps(props){
             fourOfour: {},
             urlRedirectto: {}
         }
-        this.setState({updateLoading:true})
+        this.setState({updateLoading:true,error:''})
         PutRequest.updateFeature(this.props.urlDetails.URL._id,data).then(res=>{
             this.props.onGetUrlDetails(this.props.urlDetails.URL._id)
             this.props.setNotification("success","Link updated successfully")
             this.setState({updateLoading:false})
         }).catch(err=>{
+            if(err.response.status===401)
+            this.setState({updateLoading:false,error:"The link is already exist!"})
+            else{
             this.props.setNotification("error",err.message)
-            this.setState({updateLoading:false})
+            this.setState({updateLoading:false,error:''})
+            }
         })
     }
     onUnlock=()=>{
@@ -69,12 +74,12 @@ componentWillReceiveProps(props){
     }
     render() {
         console.log("abcd",this.props.urlDetails)
-        const { CustomLink,unblockLoading,updateLoading } = this.state
+        const { CustomLink,unblockLoading,updateLoading,error } = this.state
         const { URL }=this.props.urlDetails
         var feature={
             locked:true,
             expiryDate:'',
-
+            
         }
 
         if(URL){
@@ -93,6 +98,7 @@ componentWillReceiveProps(props){
                                 <FormGroup className="input-wrapper">
                                     <ControlLabel>short link</ControlLabel>
                                     <FormControl type="rext" value={CustomLink} onChange={(e) => this.setState({ CustomLink: e.target.value })} placeholder="Enter your custom link" />
+                                   {error!==''&&<Row className="_error">{error}<br/></Row>}
                                    <label>Expiry Date:</label><span>{DateFormat(feature.expiryDate)}</span>
                                 </FormGroup>
                                  <Row className="button_rapper" >
