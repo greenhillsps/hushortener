@@ -290,3 +290,23 @@ font-weight: bolder;
 .chart_col{
     text-align: center;
 }
+
+.Setting_wrapper{
+    text-align: center;
+    margin: 100px;
+
+}
+.Setting_wrapper .btn{
+    background-color: #f04732c2;
+    border-color: #f04732c2;
+    color: white;
+    font-weight: bold;
+}
+
+.sidebar-wrapper .user .photo{
+    border-color: white !important;
+}
+.sidebar-wrapper .user .info{
+    font-weight: bold;
+    font-size: 20px;
+}
