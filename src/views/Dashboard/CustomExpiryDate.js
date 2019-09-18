@@ -5,10 +5,10 @@ import Button from "components/CustomButton/CustomButton";
 import { PutRequest } from '../../utils/ApiMethods'
 import { connect } from 'react-redux'
 import { onGetUrlDetails } from '../../store/actions'
-import { DateFormat,DateValidation } from '../../utils/helpers'
+import { DateFormat, DateValidation } from '../../utils/helpers'
 import LinkDetailsHeader from '../../components/LinkDetailsHeader'
 import DatePicker from 'react-datetime';
-
+import { LockedFeature } from '../../utils/constants'
 class CustomExpiryDate extends React.Component {
     state = {
         linkExpiryDate: '',
@@ -19,14 +19,14 @@ class CustomExpiryDate extends React.Component {
 
     componentDidMount() {
         if (this.props.urlDetails.URL) {
-            if(!this.props.urlDetails.URL.features.customExpiryDate.locked){
-                if(this.props.urlDetails.URL.features.customExpiryDate.customExpiryDate){
+            if (!this.props.urlDetails.URL.features.customExpiryDate.locked) {
+                if (this.props.urlDetails.URL.features.customExpiryDate.customExpiryDate) {
                     this.setState({ linkExpiryDate: this.props.urlDetails.URL.features.customExpiryDate.customExpiryDate })
-                }else{
+                } else {
                     this.setState({ linkExpiryDate: this.props.urlDetails.URL.features.customExpiryDate.expiryDate })
 
                 }
-           
+
             }
         }
     }
@@ -34,28 +34,28 @@ class CustomExpiryDate extends React.Component {
     componentWillReceiveProps(props) {
         if (props.urlDetails.URL) {
 
-            if(!props.urlDetails.URL.features.customExpiryDate.locked){
-                if(props.urlDetails.URL.features.customExpiryDate.customExpiryDate){
+            if (!props.urlDetails.URL.features.customExpiryDate.locked) {
+                if (props.urlDetails.URL.features.customExpiryDate.customExpiryDate) {
                     this.setState({ linkExpiryDate: props.urlDetails.URL.features.customExpiryDate.customExpiryDate })
-                }else{
+                } else {
                     this.setState({ linkExpiryDate: props.urlDetails.URL.features.customExpiryDate.expiryDate })
 
                 }
-           
+
             }
         }
     }
 
     onSubmit = () => {
-        if(this.state.expiryDate===''){
-            this.setState({error:'Date is require filed!'})
+        if (this.state.expiryDate === '') {
+            this.setState({ error: 'Date is require filed!' })
             return
         }
-        this.setState({error:''})
+        this.setState({ error: '' })
 
         const data = {
             blockIps: {},
-            customExpiryDate: {customExpiryDate:this.state.linkExpiryDate},
+            customExpiryDate: { customExpiryDate: this.state.linkExpiryDate },
             customReports: {},
             customShortUrl: {},
             enableToggle: {},
@@ -125,8 +125,8 @@ class CustomExpiryDate extends React.Component {
                                             value={DateFormat(linkExpiryDate)}
                                             closeOnSelect={true}
                                             timeFormat={false}
-                                            disabled={linkExpiryDate===''}
-                                        isValidDate={(date)=>DateValidation(date,feature.expiryDate)}
+                                            disabled={linkExpiryDate === ''}
+                                            isValidDate={(date) => DateValidation(date, feature.expiryDate)}
 
                                         />
                                         {error !== '' && <Row className="_error">{error}<br /></Row>}
@@ -152,6 +152,10 @@ class CustomExpiryDate extends React.Component {
                                             {unblockLoading ? <i className="fa fa-spin fa-spinner" /> : "Unlock"}
                                         </Button>
                                     </Row>
+                                    <Row style={{ textAlign: 'center' }} >{
+                                        feature.locked && <label className="_error">{LockedFeature}</label>
+
+                                    }</Row>
                                 </div>
                             }
                         />

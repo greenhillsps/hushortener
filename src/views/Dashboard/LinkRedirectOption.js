@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { onGetUrlDetails } from '../../store/actions'
 import { DateFormat } from '../../utils/helpers'
 import LinkDetailsHeader from '../../components/LinkDetailsHeader'
-
+import { LockedFeature } from '../../utils/constants'
 class LinkRedirectOption extends React.Component {
     state = {
         redirectLink:'',
@@ -105,6 +105,11 @@ class LinkRedirectOption extends React.Component {
                                {unblockLoading?<i className="fa fa-spin fa-spinner"/>:"Unlock"}
                                </Button>
                              </Row>
+                             <Row style={{textAlign:'center'}} >{
+                                feature.locked&&<label className="_error">{LockedFeature}</label>
+
+                             }</Row>
+                             
                              </div>
                             }
                         />

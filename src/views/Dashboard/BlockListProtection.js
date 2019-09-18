@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { onGetUrlDetails } from '../../store/actions'
 import { DateFormat } from '../../utils/helpers'
 import LinkDetailsHeader from '../../components/LinkDetailsHeader'
-
+import { LockedFeature } from '../../utils/constants'
 class BlockListProtection extends React.Component {
     state = {
         unblockLoading: false,
@@ -109,7 +109,7 @@ class BlockListProtection extends React.Component {
         }
         return (
             <Grid fluid>
-                <LinkDetailsHeader/>
+                <LinkDetailsHeader />
                 <Row className="feature_rapper">
                     <Col md={6} mdOffset={3}>
                         <Card
@@ -171,10 +171,14 @@ class BlockListProtection extends React.Component {
                                                             </Button>
                                                         </span>
                                                     </div>
-                                                </div>
+                                            </div>
                                             ))
                                         }
                                     </div>
+                                    <Row style={{ textAlign: 'center' }} >{
+                                        feature.locked && <label className="_error">{LockedFeature}</label>
+
+                                    }</Row>
                                 </div>
                             }
                         />

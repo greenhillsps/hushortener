@@ -45,8 +45,8 @@ class LinkRedirectOption extends React.Component {
                             <td>{email}</td>
                             <td>--</td>
                             <td>{DateFormat(createdAt)}</td>
-                            <td>{totalAmountSpent}</td>
-                            <td>{wallet}</td>
+                            <td>{"$"+totalAmountSpent}</td>
+                            <td>{"$"+wallet}</td>
                             <td>{totalURLS}</td>
                         </tr>
 

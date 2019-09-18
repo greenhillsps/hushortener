@@ -8,12 +8,12 @@ import { onGetUrlDetails } from '../../store/actions'
 import { DateFormat } from '../../utils/helpers'
 import Switch from 'react-bootstrap-switch';
 import LinkDetailsHeader from '../../components/LinkDetailsHeader'
-
+import { LockedFeature } from '../../utils/constants'
 
 class TurnLinkOnOf extends React.Component {
     state = {
         toggle: true,
-        change:'',
+        change: '',
         unblockLoading: false,
         updateLoading: false
     }
@@ -33,7 +33,7 @@ class TurnLinkOnOf extends React.Component {
         this.setState({ updateLoading: true })
         PutRequest.updateFeature(this.props.urlDetails.URL._id, data).then(res => {
             this.props.onGetUrlDetails(this.props.urlDetails.URL._id)
-            this.props.setNotification("success", `Turn ${this.state.toggle?"on":"off"} link successfully`)
+            this.props.setNotification("success", `Turn ${this.state.toggle ? "on" : "off"} link successfully`)
             this.setState({ updateLoading: false })
         }).catch(err => {
             this.props.setNotification("error", err.message)
@@ -62,12 +62,12 @@ class TurnLinkOnOf extends React.Component {
     }
     render() {
         console.log("abcd", this.props.urlDetails)
-        const { toggle, unblockLoading, updateLoading,change } = this.state
+        const { toggle, unblockLoading, updateLoading, change } = this.state
         const { URL } = this.props.urlDetails
         var feature = {
             locked: true,
             expiryDate: '',
-            enable:false
+            enable: false
 
         }
 
@@ -78,18 +78,18 @@ class TurnLinkOnOf extends React.Component {
         }
         return (
             <Grid className="feature_rapper" fluid>
-                <LinkDetailsHeader/>
+                <LinkDetailsHeader />
                 <Row>
                     <Col md={6} mdOffset={3}>
                         <Card
                             title={"Turn Link On/Of"}
                             content={
                                 <div>
-                                    <FormGroup style={{textAlign:'center'}} className="input-wrapper">
+                                    <FormGroup style={{ textAlign: 'center' }} className="input-wrapper">
                                         <Row>
                                             <Switch
-                                                onChange={()=>this.setState({change:'changed',toggle:!this.state.toggle})}
-                                                value={change===''?feature.enable:toggle}
+                                                onChange={() => this.setState({ change: 'changed', toggle: !this.state.toggle })}
+                                                value={change === '' ? feature.enable : toggle}
                                                 onText="Unblock"
                                                 offText="Block"
                                                 className="golu-golu"
@@ -120,6 +120,10 @@ class TurnLinkOnOf extends React.Component {
                                             {unblockLoading ? <i className="fa fa-spin fa-spinner" /> : "Unlock"}
                                         </Button>
                                     </Row>
+                                    <Row style={{ textAlign: 'center' }} >{
+                                        feature.locked && <label className="_error">{LockedFeature}</label>
+
+                                    }</Row>
                                 </div>
                             }
                         />
