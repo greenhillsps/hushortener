@@ -1,6 +1,6 @@
 //const baseUrl = process.env.REACT_APP_API_URL;
-//const baseUrl = 'https://shortenerapi.herokuapp.com/api';
-const baseUrl="http://localhost:4040/api"
+const baseUrl = 'https://shortenerapi.herokuapp.com/api';
+//const baseUrl="http://localhost:4040/api"
 const Api = {
     login: `${baseUrl}/auth/login`, //'/api/login'
      register:()=>{

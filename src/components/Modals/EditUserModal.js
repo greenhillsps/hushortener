@@ -65,7 +65,12 @@ class EditUser extends React.Component {
                                     getUserProfile()
                                     this.setState({ loading: false })
                                 }).catch(err => {
-                                    setNotification('error', err.message)
+                                    if(err.response.data.codeName==="DuplicateKey"){
+                                              this.setState({errorMessage:'Email already exist!'})
+                                    }else{
+                                        setNotification('error', err.message)
+
+                                    }
                                     this.setState({ loading: false })
                                 })
                             }}

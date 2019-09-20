@@ -44,6 +44,7 @@ export class AllUrls extends React.Component {
 
 
   onGetDetails=(id)=>{
+    this.setState({id})
     this.props.hide()
   this.props.onGetUrlDetails(id)
   }
@@ -71,7 +72,7 @@ export class AllUrls extends React.Component {
                   icon
                   view="Details"
                 >
-                  <i className="fa fa-eye" />
+                  <i className={this.state.id===prop._id?"fa fa-spin fa-spinner":"fa fa-eye"} />
                 </Button>
                 {/* use this button to add a edit kind of action */}
                 <Button
