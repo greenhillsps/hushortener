@@ -5,11 +5,9 @@ import {
   Grid,
   Row,
   Col,
-  Media,
   FormControl,
   FormGroup,
   ControlLabel,
-  Image
 } from "react-bootstrap";
 import Card from "components/Card/Card";
 import Button from "components/CustomButton/CustomButton";

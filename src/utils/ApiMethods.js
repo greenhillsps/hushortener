@@ -66,6 +66,9 @@ export const PutRequest = {
   BuyFeature(id,data) {
     return axrequest.put(api.BuyFeature(id),data);
   },
+  updateUser(data) {
+    return axrequest.put(api.updateUser(),data);
+  },
 };
 
 

@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 
 import { DateFormat} from '../../utils/helpers'
 import Button from "components/CustomButton/CustomButton";
+import EditUserModal from '../../components/Modals/EditUserModal'
 
 class LinkRedirectOption extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {}
+            user: {},
+            showEditUserModal:false
         }
         this.getUserProfile()
     }
@@ -24,7 +26,7 @@ class LinkRedirectOption extends React.Component {
     }
 
     render() {
-        const { firstName, createdAt, email, lastName, totalAmountSpent, totalURLS, wallet } = this.state.user
+        const { firstName, createdAt, email, lastName, totalAmountSpent, totalURLS, wallet,phoneNumber } = this.state.user
         return (
             <Grid className="Setting_wrapper"fluid>
                 <Table striped bordered hover>
@@ -43,7 +45,7 @@ class LinkRedirectOption extends React.Component {
                         <tr>
                             <td>{firstName + " " + lastName}</td>
                             <td>{email}</td>
-                            <td>--</td>
+                            <td>{"+92"+phoneNumber}</td>
                             <td>{DateFormat(createdAt)}</td>
                             <td>{"$"+totalAmountSpent}</td>
                             <td>{"$"+wallet}</td>
@@ -55,11 +57,20 @@ class LinkRedirectOption extends React.Component {
                 <Button
                     fill
                     round
-                    onClick={this.onUnlock}
+                    onClick={()=>this.setState({showEditUserModal:true})}
                     className="btn"
                     >
                     {<i className="fa fa-pencil"/>}Edit
                    </Button>
+                   {
+                       this.state.showEditUserModal&&
+                       <EditUserModal
+                       show={this.state.showEditUserModal}
+                       hide={()=>this.setState({showEditUserModal:false})}
+                       user={this.state.user}
+                       getUserProfile={this.getUserProfile}
+                       />
+                   }
             </Grid>
         )
     }
