@@ -1,6 +1,6 @@
 
-export const appTitle = "Green Hills Public School & Collage"
-export const brand = "Green Hills Public School & Collage"
+export const appTitle = "HU Shortener"
+export const brand = "HU Shortener"
 export const getTabTitle = (tab) => {
     return `${(tab ? tab + ' | ' : '')} ${appTitle}`;
 }
