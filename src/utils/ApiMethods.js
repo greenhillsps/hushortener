@@ -51,6 +51,9 @@ export const GetRequest = {
   getUrlDetails(id) {
     return axrequest.get(api.getUrlDetails(id),);
   },
+  getUser() {
+    return axrequest.get(api.getUser());
+  },
 };
 
 export const PutRequest = {
@@ -62,6 +65,9 @@ export const PutRequest = {
   },
   BuyFeature(id,data) {
     return axrequest.put(api.BuyFeature(id),data);
+  },
+  updateUser(data) {
+    return axrequest.put(api.updateUser(),data);
   },
 };
 

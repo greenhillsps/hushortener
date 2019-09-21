@@ -8,31 +8,48 @@ import { onGetUrlDetails } from '../../store/actions'
 import { DateFormat } from '../../utils/helpers'
 import LinkDetailsHeader from '../../components/LinkDetailsHeader'
 import { LockedFeature } from '../../utils/constants'
-class LinkRedirectOption extends React.Component {
+class CustomShortLink extends React.Component {
     state = {
-        redirectLink:'',
+        CustomLink:'',
         unblockLoading:false,
-         updateLoading:false
+         updateLoading:false,
+         error:''
     }
+
+componentDidMount(){
+    if(this.props.urlDetails.URL){
+        this.setState({CustomLink:this.props.urlDetails.URL.queryKey})
+    }
+}
+
+componentWillReceiveProps(props){
+    if(props.urlDetails.URL){
+        this.setState({CustomLink:props.urlDetails.URL.queryKey})
+    }
+}
 
     onSubmit = () => {
         const data = {
             blockIps: {},
             customExpiryDate: {},
             customReports: {},
-            customShortUrl: {},
+            customShortUrl: {shortUrl: this.state.CustomLink},
             enableToggle: {},
-            fourOfour: { allow: false },
-            urlRedirectto: { change: true, url:this.state.redirectLink }
+            fourOfour: {},
+            urlRedirectto: {}
         }
-        this.setState({updateLoading:true})
+        this.setState({updateLoading:true,error:''})
         PutRequest.updateFeature(this.props.urlDetails.URL._id,data).then(res=>{
             this.props.onGetUrlDetails(this.props.urlDetails.URL._id)
             this.props.setNotification("success","Link updated successfully")
             this.setState({updateLoading:false})
         }).catch(err=>{
+            if(err.response.status===401)
+            this.setState({updateLoading:false,error:"The link is already exist!"})
+            else{
             this.props.setNotification("error",err.message)
-            this.setState({updateLoading:false})
+            this.setState({updateLoading:false,error:''})
+            }
         })
     }
     onUnlock=()=>{
@@ -40,10 +57,10 @@ class LinkRedirectOption extends React.Component {
         blockIps: false,
         customExpiryDate: false,
         customReports: false,
-        customShortUrl: false,
+        customShortUrl: true,
         enableToggle: false,
         fourOfour: false,
-        urlRedirectto: true
+        urlRedirectto: false
       }
       this.setState({unblockLoading:true})
       PutRequest.BuyFeature(this.props.urlDetails.URL._id,data).then(res=>{
@@ -57,19 +74,17 @@ class LinkRedirectOption extends React.Component {
     }
     render() {
         console.log("abcd",this.props.urlDetails)
-        const { redirectLink,unblockLoading,updateLoading } = this.state
+        const { CustomLink,unblockLoading,updateLoading,error } = this.state
         const { URL }=this.props.urlDetails
         var feature={
             locked:true,
             expiryDate:'',
-            url:''
-
+            
         }
 
         if(URL){
-            feature.locked=URL.features.urlRedirectto.locked;
-            feature.expiryDate=URL.features.urlRedirectto.expiryDate;
-            feature.url=URL.features.urlRedirectto.url
+            feature.locked=URL.features.customShortUrl.locked;
+            feature.expiryDate=URL.features.customShortUrl.expiryDate;
         }
         return (
             <Grid className="feature_rapper" fluid>
@@ -77,12 +92,13 @@ class LinkRedirectOption extends React.Component {
                 <Row>
                     <Col md={6} mdOffset={3}>
                         <Card
-                            title={"Link redirect option"}
+                            title={"Custom short link"}
                             content={
                                 <div>
                                 <FormGroup className="input-wrapper">
-                                    <ControlLabel>Redirect Link</ControlLabel>
-                                    <FormControl type="rext" value={redirectLink===''?feature.url:redirectLink} onChange={(e) => this.setState({ redirectLink: e.target.value })} placeholder="Choose redirect link" />
+                                    <ControlLabel>short link</ControlLabel>
+                                    <FormControl type="rext" value={CustomLink} onChange={(e) => this.setState({ CustomLink: e.target.value })} placeholder="Enter your custom link" />
+                                   {error!==''&&<Row className="_error">{error}<br/></Row>}
                                    <label>Expiry Date:</label><span>{DateFormat(feature.expiryDate)}</span>
                                 </FormGroup>
                                  <Row className="button_rapper" >
@@ -109,7 +125,6 @@ class LinkRedirectOption extends React.Component {
                                 feature.locked&&<label className="_error">{LockedFeature}</label>
 
                              }</Row>
-                             
                              </div>
                             }
                         />
@@ -133,4 +148,4 @@ const mapDispatchToProps=dispatch=>{
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(LinkRedirectOption)
+export default connect(mapStateToProps,mapDispatchToProps)(CustomShortLink)

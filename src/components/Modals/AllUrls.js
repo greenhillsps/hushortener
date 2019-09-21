@@ -1,14 +1,14 @@
 import React from "react";
-import Card from "components/Card/Card";
 import Button from "components/CustomButton/CustomButton";
-import { Grid, Row, Col,Modal } from "react-bootstrap";
+import { Grid, Row, Col,Modal,Nav,NavItem } from "react-bootstrap";
 import ReactTable from "react-table";
 import { DateFormat } from "../../utils/helpers"
 import { connect } from 'react-redux'
-import { GetRequest,PutRequest } from "../../utils/ApiMethods";
+import { PutRequest } from "../../utils/ApiMethods";
 import { onGetUrlDetails } from '../../store/actions'
 import SweetAlert from "react-bootstrap-sweetalert";
 import { onGetAllLinks } from '../../store/actions'
+import { auth } from '../../utils/Auth'
 const defaultParams={
     page:0,
     limit:10
@@ -44,12 +44,13 @@ export class AllUrls extends React.Component {
 
 
   onGetDetails=(id)=>{
+    this.setState({id})
     this.props.hide()
   this.props.onGetUrlDetails(id)
   }
   render() {
       const { show,hide }=this.props
-    var links=this.props.allLinks.URls?this.props.allLinks.URls:[]
+    var links=this.props.allLinks.URls?this.props.allLinks.URls.sort((a, b) => b.createdAt - a.createdAt):[]
     const data = links.map((prop, sn) => {
           return {
             id: prop._id,
@@ -71,7 +72,7 @@ export class AllUrls extends React.Component {
                   icon
                   view="Details"
                 >
-                  <i className="fa fa-eye" />
+                  <i className={this.state.id===prop._id?"fa fa-spin fa-spinner":"fa fa-eye"} />
                 </Button>
                 {/* use this button to add a edit kind of action */}
                 <Button
@@ -113,16 +114,42 @@ export class AllUrls extends React.Component {
     return (
       <div>
           <Modal
-        dialogClassName="urlList_modal"
+          size="lg"
+       dialogClassName="urlList_modal"
         show={show}
         onHide={hide}
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-sm">
-          Your URLs<span>
-            <Button  bsStyle="danger" fill round onClick={this.props.onShowModal} >
+          <span>
+            {/* <Button  bsStyle="danger" fill round onClick={this.props.onShowModal} >
               Create New   
-            </Button>
+            </Button> */}
+            <Nav>
+          <NavItem eventKey={4} href="#">
+           
+            <div className="header_links_style"
+              onClick={() => {
+            this.props.onShowModal();
+              }}
+            >
+              <i className={'fa fa-chain'} />
+              Create New
+            </div>
+          </NavItem>
+             
+              </Nav>
+              <Nav>
+
+          <NavItem eventKey={3} onClick={() => { auth.logout(this.props.history) }}>
+
+            <div className="header_links_style">
+              <i className="fa fa-sign-out" /> Log out
+              </div>
+          </NavItem>
+
+        </Nav>
+
           </span>
           </Modal.Title>
         </Modal.Header>

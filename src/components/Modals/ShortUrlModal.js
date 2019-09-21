@@ -104,7 +104,7 @@ const validationSchema = Yup.object().shape({
         <Modal.Header closeButton>
           <Modal.Title>Shorten your link here</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{backgroundColor:"#a4a0c5"}} >
           <Form>
             <FormGroup
               validationState={
@@ -116,7 +116,7 @@ const validationSchema = Yup.object().shape({
                   style={{
                     height: '51px',
                     fontSize: '17px',
-                    border: '1px solid #ff7f00',
+                    border: '1px solid #444',
                   }}
                   className={
                     touched.link && errors.link ? 'animated swing error' : null
@@ -128,15 +128,14 @@ const validationSchema = Yup.object().shape({
                   onChange={handleChange}
                 />
 
-                <InputGroup.Addon style={{ backgroundColor: '#ff7f00',color:'#fff' }}>
-                  <Button
-                    
-                    type="submit"
-                    fill
-                    wd
-                  >
+                <InputGroup.Addon onClick={()=>{
+                   const data={
+                    actualUrl:values.link
+                }
+                 this.onShortenLink(data)
+                }} style={{ backgroundColor: 'rgb(68, 68, 68)',color:'white',fontWeight:"bold",cursor:'pointer' }}>
+                 
                     SHORTEN
-                  </Button>
 
                   <i style={{color:'white'}}
                     className={this.state.loading ? 'fa fa-spin fa-spinner' : null}
@@ -164,19 +163,12 @@ const validationSchema = Yup.object().shape({
                     onClick={() => {
                     this.setState({copied:true,animateText:true})
                     }}
-                    style={{ backgroundColor: '#ff7f00',color:'#fff' }}
-                  >
+                    style={{ backgroundColor: 'rgb(68, 68, 68)',color:'white',fontWeight:"bold",cursor:'pointer' }}                  >
                     <CopyToClipboard text={this.state.shortenLink.shortUrl}>
-                      <button
-                        style={{ border: '1px solid #ff7f00' }}
-                        onClick={() => {
-                          this.setState({copied:true,animateText:true})
-                        }}
-                        className={this.state.copied ? 'animated shake error' : null}
-                        type="text"
+                      <div className={this.state.copied ? 'animated shake error' : null}
                       >
                         Copy
-                      </button>
+                      </div>
                     </CopyToClipboard>
                   </InputGroup.Addon>
                 </InputGroup>
@@ -191,8 +183,8 @@ const validationSchema = Yup.object().shape({
             </div>
           ) : null}
         </Modal.Body>
-        <Modal.Footer>
-          <Button type="submit" bsStyle="danger" fill wd onClick={this.props.hide}> 
+        <Modal.Footer style={{textAlign:'center',backgroundColor:"#a4a0c5"}}>
+          <Button type="submit" round fill wd onClick={this.props.hide}> 
             Close
           </Button>
         </Modal.Footer>

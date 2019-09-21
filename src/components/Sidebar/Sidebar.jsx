@@ -89,30 +89,12 @@ class Sidebar extends Component {
               <p className="name-avatar">{getInitials(user.user.firstName)}</p>
             </div>
             <div className="info">
-              <a
-                onClick={() =>
-                  this.setState({ openAvatar: !this.state.openAvatar })
-                }
-              >
+              
                 <span>
-                  {user.name}
-                  <b
-                    className={
-                      this.state.openAvatar ? "caret rotate-180" : "caret"
-                    }
-                  />
+                  {user.user.firstName}
+                  
                 </span>
-              </a>
-              <Collapse in={this.state.openAvatar}>
-                <ul className="nav">
-                  <li onClick={() => { auth.logout(this.props.history) }}>
-                    <a>
-                      <span className="sidebar-normal"><i className="fa fa-sign-out" />Log Out</span>
-                    </a>
-                  </li>
-                 
-                </ul>
-              </Collapse>
+             
             </div>
           </div>
 

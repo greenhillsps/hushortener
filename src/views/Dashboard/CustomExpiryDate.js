@@ -5,48 +5,84 @@ import Button from "components/CustomButton/CustomButton";
 import { PutRequest } from '../../utils/ApiMethods'
 import { connect } from 'react-redux'
 import { onGetUrlDetails } from '../../store/actions'
-import { DateFormat } from '../../utils/helpers'
-import Switch from 'react-bootstrap-switch';
+import { DateFormat, DateValidation } from '../../utils/helpers'
 import LinkDetailsHeader from '../../components/LinkDetailsHeader'
+import DatePicker from 'react-datetime';
 import { LockedFeature } from '../../utils/constants'
-
-class TurnLinkOnOf extends React.Component {
+class CustomExpiryDate extends React.Component {
     state = {
-        toggle: true,
-        change: '',
+        linkExpiryDate: '',
         unblockLoading: false,
-        updateLoading: false
+        updateLoading: false,
+        error: ''
     }
 
+    componentDidMount() {
+        if (this.props.urlDetails.URL) {
+            if (!this.props.urlDetails.URL.features.customExpiryDate.locked) {
+                if (this.props.urlDetails.URL.features.customExpiryDate.customExpiryDate) {
+                    this.setState({ linkExpiryDate: this.props.urlDetails.URL.features.customExpiryDate.customExpiryDate })
+                } else {
+                    this.setState({ linkExpiryDate: this.props.urlDetails.URL.features.customExpiryDate.expiryDate })
 
+                }
+
+            }
+        }
+    }
+
+    componentWillReceiveProps(props) {
+        if (props.urlDetails.URL) {
+
+            if (!props.urlDetails.URL.features.customExpiryDate.locked) {
+                if (props.urlDetails.URL.features.customExpiryDate.customExpiryDate) {
+                    this.setState({ linkExpiryDate: props.urlDetails.URL.features.customExpiryDate.customExpiryDate })
+                } else {
+                    this.setState({ linkExpiryDate: props.urlDetails.URL.features.customExpiryDate.expiryDate })
+
+                }
+
+            }
+        }
+    }
 
     onSubmit = () => {
+        if (this.state.expiryDate === '') {
+            this.setState({ error: 'Date is require filed!' })
+            return
+        }
+        this.setState({ error: '' })
+
         const data = {
             blockIps: {},
-            customExpiryDate: {},
+            customExpiryDate: { customExpiryDate: this.state.linkExpiryDate },
             customReports: {},
             customShortUrl: {},
-            enableToggle: { enable: this.state.toggle },
+            enableToggle: {},
             fourOfour: {},
             urlRedirectto: {}
         }
-        this.setState({ updateLoading: true })
+        this.setState({ updateLoading: true, error: '' })
         PutRequest.updateFeature(this.props.urlDetails.URL._id, data).then(res => {
             this.props.onGetUrlDetails(this.props.urlDetails.URL._id)
-            this.props.setNotification("success", `Turn ${this.state.toggle ? "on" : "off"} link successfully`)
+            this.props.setNotification("success", "Link updated successfully")
             this.setState({ updateLoading: false })
         }).catch(err => {
-            this.props.setNotification("error", err.message)
-            this.setState({ updateLoading: false })
+            if (err.response.status === 401)
+                this.setState({ updateLoading: false, error: "The link is already exist!" })
+            else {
+                this.props.setNotification("error", err.message)
+                this.setState({ updateLoading: false, error: '' })
+            }
         })
     }
     onUnlock = () => {
         const data = {
             blockIps: false,
-            customExpiryDate: false,
+            customExpiryDate: true,
             customReports: false,
             customShortUrl: false,
-            enableToggle: true,
+            enableToggle: false,
             fourOfour: false,
             urlRedirectto: false
         }
@@ -62,19 +98,17 @@ class TurnLinkOnOf extends React.Component {
     }
     render() {
         console.log("abcd", this.props.urlDetails)
-        const { toggle, unblockLoading, updateLoading, change } = this.state
+        const { linkExpiryDate, unblockLoading, updateLoading, error } = this.state
         const { URL } = this.props.urlDetails
         var feature = {
             locked: true,
             expiryDate: '',
-            enable: false
 
         }
 
         if (URL) {
-            feature.locked = URL.features.enableToggle.locked;
-            feature.expiryDate = URL.features.enableToggle.expiryDate;
-            feature.enable = URL.features.enableToggle.enable
+            feature.locked = URL.features.customExpiryDate.locked;
+            feature.expiryDate = URL.features.customExpiryDate.expiryDate;
         }
         return (
             <Grid className="feature_rapper" fluid>
@@ -82,26 +116,25 @@ class TurnLinkOnOf extends React.Component {
                 <Row>
                     <Col md={6} mdOffset={3}>
                         <Card
-                            title={"Turn Link On/Of"}
+                            title={"Custom expiry date"}
                             content={
                                 <div>
-                                    <FormGroup style={{ textAlign: 'center' }} className="input-wrapper">
-                                        <Row>
-                                            <Switch
-                                                onChange={() => this.setState({ change: 'changed', toggle: !this.state.toggle })}
-                                                value={change === '' ? feature.enable : toggle}
-                                                onText="Unblock"
-                                                offText="Block"
-                                                className="golu-golu"
-                                            />
-                                        </Row>
+                                    <FormGroup>
+                                        <DatePicker
+                                            onChange={(date) => this.setState({ linkExpiryDate: date })}
+                                            value={DateFormat(linkExpiryDate)}
+                                            closeOnSelect={true}
+                                            timeFormat={false}
+                                            disabled={linkExpiryDate === ''}
+                                            isValidDate={(date) => DateValidation(date, feature.expiryDate)}
 
+                                        />
+                                        {error !== '' && <Row className="_error">{error}<br /></Row>}
                                         <label>Expiry Date:</label><span>{DateFormat(feature.expiryDate)}</span>
                                     </FormGroup>
                                     <Row className="button_rapper" >
                                         <Button
                                             fill
-                                            //bsStyle="success"
                                             round
                                             onClick={this.onSubmit}
                                             disabled={feature.locked || updateLoading}
@@ -112,7 +145,6 @@ class TurnLinkOnOf extends React.Component {
                                         <Button
                                             disabled={!feature.locked || unblockLoading}
                                             fill
-                                            //bsStyle="danger"
                                             round
                                             onClick={this.onUnlock}
                                         // disabled={feature.locked}
@@ -147,4 +179,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TurnLinkOnOf)
+export default connect(mapStateToProps, mapDispatchToProps)(CustomExpiryDate)

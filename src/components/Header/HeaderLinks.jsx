@@ -25,7 +25,10 @@ class HeaderLinks extends Component {
 
         <Nav pullRight>
 
-          <NavItem eventKey={3} onClick={() => { auth.logout(this.props.history) }}>
+          <NavItem eventKey={3} onClick={() => { 
+            auth.logout(this.props.history)
+            this.props.onClearReduxData()
+            }}>
 
             <div className="header_links_style">
               <i className="fa fa-sign-out" /> Log out
@@ -68,6 +71,7 @@ class HeaderLinks extends Component {
                 <AllLinks
                 show={this.state.showLinkModal||!this.props.urlDetails.URL}
                 hide={()=>this.setState({showLinkModal:false})}
+                history={this.props.history}
                 />
               :null}
       </div>
@@ -81,7 +85,8 @@ const mapStateToProps=state=>{
 }
 const mapDispatchToProps=dispatch=>{
   return{
-    onShowModal:()=>dispatch({type:"SHOW_MODAL",payload:true})
+    onShowModal:()=>dispatch({type:"SHOW_MODAL",payload:true}),
+    onClearReduxData:()=>dispatch({type:"CLEAR_REDUX_DATA",})
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(HeaderLinks))

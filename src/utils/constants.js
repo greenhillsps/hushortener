@@ -5,5 +5,4 @@ export const getTabTitle = (tab) => {
     return `${(tab ? tab + ' | ' : '')} ${appTitle}`;
 }
 
-
-
+export const LockedFeature="Click unlock button to use this feature!"

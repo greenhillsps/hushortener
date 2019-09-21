@@ -14,6 +14,12 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'CLEAR_REDUX_DATA':
+            return{
+                ...state,
+                allLinks:[],
+                urlDetails:[]
+            }
         case 'ON_GET_ALL_LINKS':
             return{
                 ...state,

@@ -19,12 +19,18 @@ const Api = {
      getUrlDetails:(id)=>{
         return `${baseUrl}/url/${id}`
         },
+        getUser:()=>{
+         return `${baseUrl}/users/user`
+         },
         updateFeature:(id)=>{
          return `${baseUrl}/feature/buy/${id}`
          },
          BuyFeature:(id)=>{
             return `${baseUrl}/cart/buy/${id}`
             },
+            updateUser:()=>{
+               return `${baseUrl}/users/update`
+               },
 }
 
 
