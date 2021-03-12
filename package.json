@@ -63,7 +63,7 @@
     "react-date-picker": "^7.4.0",
     "react-date-range": "^1.0.0-beta",
     "react-datetime": "2.14.0",
-    "react-dev-utils": "^5.0.0",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "16.2.0",
     "react-drag-sortable": "^1.0.6",
     "react-dropzone": "^4.3.0",
