@@ -41,7 +41,7 @@
     "js-sha256": "^0.9.0",
     "jsrsasign": "8.0.4",
     "lodash": "^4.17.11",
-    "moment": "2.21.0",
+    "moment": "2.29.2",
     "node-sass": "^4.10.0",
     "node-sass-chokidar": "0.0.3",
     "nouislider": "11.0.3",
